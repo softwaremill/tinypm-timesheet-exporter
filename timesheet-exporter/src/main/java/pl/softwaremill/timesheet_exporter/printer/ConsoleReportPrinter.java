@@ -22,19 +22,18 @@ public class ConsoleReportPrinter implements IReportPrinter {
 
         Set<User> users = reportData.keySet();
 
+        float totalSum = 0f;
+
         for (User user : users) {
-            float sumPerUser = 0f;
 
             for (DataRow dataRow : reportData.get(user)) {
                 System.out.println(ToCsv.toCSV(dataRow, settings.getFields()));
-                sumPerUser += dataRow.getTimeSpent();
-            }
-
-            if (settings.getSum()) {
-                System.out.println("Sum = " + sumPerUser);
+                totalSum += dataRow.getTimeSpent();
             }
         }
 
-
+        if (settings.getSum()) {
+            System.out.println("Sum = " + totalSum);
+        }
     }
 }
