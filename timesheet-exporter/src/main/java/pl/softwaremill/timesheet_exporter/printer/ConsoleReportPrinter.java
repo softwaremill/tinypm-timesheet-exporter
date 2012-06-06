@@ -18,11 +18,7 @@ public class ConsoleReportPrinter implements IReportPrinter {
     @Override
     public void printReport(Multimap<User, DataRow> reportData) {
 
-        System.out.println("Timesheet Report");
-        boolean printProjectName = settings.getProjectCodes() == null || settings.getProjectCodes().size() > 1;
-        boolean printUserName = settings.getUser() == null;
-
-        System.out.println(ToCsv.getColumns(printProjectName, printUserName));
+        System.out.println(ToCsv.getColumns(settings.getFields()));
 
         Set<User> users = reportData.keySet();
 
@@ -30,11 +26,13 @@ public class ConsoleReportPrinter implements IReportPrinter {
             float sumPerUser = 0f;
 
             for (DataRow dataRow : reportData.get(user)) {
-                System.out.println(ToCsv.toCSV(dataRow, printProjectName, printUserName));
+                System.out.println(ToCsv.toCSV(dataRow, settings.getFields()));
                 sumPerUser += dataRow.getTimeSpent();
             }
 
-            System.out.println("Sum = " + sumPerUser);
+            if (settings.getSum()) {
+                System.out.println("Sum = " + sumPerUser);
+            }
         }
 
 

@@ -72,4 +72,19 @@ public class DataRow {
         result = 31 * result + (timeSpent != +0.0f ? Float.floatToIntBits(timeSpent) : 0);
         return result;
     }
+
+    public String getValue(String field) {
+        try {
+            Object o = getClass().getDeclaredField(field).get(this);
+
+            if (o == null) {
+                return "";
+            }
+            else {
+                return o.toString();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

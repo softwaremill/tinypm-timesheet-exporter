@@ -16,6 +16,6 @@ public class CsvReportPrinter implements IReportPrinter {
 
     @Override
     public void printReport(Multimap<User, DataRow> reportData) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        throw new RuntimeException("Not implemented!");
     }
 }

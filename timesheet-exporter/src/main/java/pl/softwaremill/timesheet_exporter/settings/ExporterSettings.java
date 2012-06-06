@@ -34,9 +34,14 @@ public class ExporterSettings {
     @Parameter(names = "-user", description = "User's timesheet", required = false)
     private String user;
 
-    @Parameter(names = "-output", description = "Report output format", required = true, converter = OutputConverter.class)
-    private OutputEnum output;
+    @Parameter(names = "-output", description = "Report output format", required = false, converter = OutputConverter.class)
+    private OutputEnum output = OutputEnum.CONSOLE;
 
+    @Parameter(names = "-fields", description = "Coma-separated fields to be exported", required = false)
+    private String fields = "user,project,userStory,task,date,timeSpent";
+
+    @Parameter(names = "-sum")
+    private Boolean sum = false;
 
     public String getTinypmUrl() {
         return tinypmUrl;
@@ -72,6 +77,14 @@ public class ExporterSettings {
 
     public Date getDateTo() {
         return dateTo;
+    }
+
+    public String[] getFields() {
+        return fields.split(",");
+    }
+
+    public Boolean getSum() {
+        return sum;
     }
 
     @VisibleForTesting

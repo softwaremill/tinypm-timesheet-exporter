@@ -12,6 +12,7 @@ import pl.softwaremill.timesheet_exporter.settings.SettingsValidator;
 import pl.softwaremill.timesheet_exporter.transform.DataRow;
 import pl.softwaremill.timesheet_exporter.transform.DataTransfomer;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 
 public class Main {
@@ -20,6 +21,22 @@ public class Main {
 
         ExporterSettings exporterSettings = new ExporterSettings();
         new JCommander(exporterSettings, args);
+
+        // validate fields
+        for (String field : exporterSettings.getFields()) {
+            try {
+                DataRow.class.getDeclaredField(field);
+            } catch (NoSuchFieldException e) {
+                String fields = "{";
+
+                for (Field declaredField : DataRow.class.getDeclaredFields()) {
+                    fields += declaredField.getName() + " ";
+                }
+
+                System.err.println("Field "+field+" is incorrect. Available fields are: "+fields+"}");
+                System.exit(1);
+            }
+        }
 
         new SettingsValidator().validate(exporterSettings);
 

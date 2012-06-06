@@ -14,5 +14,6 @@ public class PdfReportPrinter implements IReportPrinter {
 
     @Override
     public void printReport(Multimap<User, DataRow> reportData) {
+        throw new RuntimeException("Not implemented!");
     }
 }

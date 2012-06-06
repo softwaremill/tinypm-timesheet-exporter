@@ -1,51 +1,69 @@
 package pl.softwaremill.timesheet_exporter.printer;
 
 import pl.softwaremill.timesheet_exporter.transform.DataRow;
-import pl.softwaremill.timesheet_exporter.transform.DateUtil;
 
 public class ToCsv {
 
-    public static String toCSV(DataRow row, boolean withProjectName, boolean withUser) {
+    public static String toCSV(DataRow row, String[] fields) {
         StringBuilder builder = new StringBuilder();
 
-        if (withUser) {
-            builder = ToCsv.appendWithComma(builder, row.getUser());
+        for (String field : fields) {
+            appendWithComma(builder, row.getValue(field));
         }
 
-        if (withProjectName) {
-            builder = ToCsv.appendWithComma(builder, row.getProject());
-        }
-
-        builder = ToCsv.appendWithComma(builder, row.getUserStory());
-        builder = ToCsv.appendWithComma(builder, row.getTask());
-        builder = ToCsv.appendWithComma(builder, DateUtil.formatDate(row.getDate()));
-        builder = builder.append(row.getTimeSpent());
+        builder.deleteCharAt(builder.length() - 1);
 
         return builder.toString();
     }
 
-    public static String getColumns(boolean withProjectName, boolean withUser) {
+    public static String getColumns(String[] fields) {
         StringBuilder builder = new StringBuilder();
 
-        if (withUser) {
-            builder = appendWithComma(builder, "User");
+        for (String field : fields) {
+            appendWithComma(builder, camelCaseToNormalCase(field));
         }
 
-        if (withProjectName) {
-            builder = appendWithComma(builder, "Project");
-        }
-
-        builder = appendWithComma(builder, "User story");
-        builder = appendWithComma(builder, "Task");
-        builder = appendWithComma(builder, "Date");
-        builder = builder.append("Time spent");
+        builder.deleteCharAt(builder.length() - 1);
 
         return builder.toString();
     }
 
     private static StringBuilder appendWithComma(StringBuilder builder, String text) {
+
+        String escapedText = text;
+
+        if (escapedText.contains(",") ||
+                escapedText.contains("\n") ||
+                escapedText.trim().length() != escapedText.length()) {
+
+            // first 'escape' quotes
+            escapedText = escapedText.replaceAll("\"", "\"\"");
+
+            // and surround with quotes
+            escapedText = "\""+escapedText+"\"";
+        }
+
         return builder
-                .append(text)
+                .append(escapedText)
                 .append(",");
+    }
+
+    private static String camelCaseToNormalCase(String text) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+
+            if (i == 0) {
+                builder.append(Character.toUpperCase(ch));
+            }
+            else {
+                if (Character.isUpperCase(ch)) {
+                    builder.append(" ");
+                }
+                builder.append(ch);
+            }
+        }
+        return builder.toString();
     }
 }
