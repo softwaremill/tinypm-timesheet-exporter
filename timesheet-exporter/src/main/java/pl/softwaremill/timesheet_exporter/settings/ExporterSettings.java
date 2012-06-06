@@ -8,39 +8,43 @@ import java.util.List;
 
 public class ExporterSettings {
 
-    @Parameter(names = "-url", description = "Tiny PM server address", required = true)
+    @Parameter(names = {"-url", "-u"}, description = "Tiny PM server address", required = true)
     private String tinypmUrl;
 
-    @Parameter(names = "-token", description = "Authentication token", required = true)
+    @Parameter(names = {"-token", "-t"}, description = "Authentication token", required = true)
     private String authenticationToken;
 
-    @Parameter(names = "-project", description = "Codes of projects to be included in timesheet report")
+    @Parameter(names = {"-loadProjects", "-lp"}, description = "If this is set, -field,, -sum, -user and -project are ignored" +
+            " and the tool will generate a list of active projects during given time")
+    private Boolean loadProjects = false;
+
+    @Parameter(names = {"-project", "-p"}, description = "Codes of projects to be included in timesheet report")
     private List<String> projectCodes;
 
-    @Parameter(names = "-year", description = "Year of timesheet")
+    @Parameter(names = {"-year", "-y"}, description = "Year of timesheet")
     private Integer year;
 
-    @Parameter(names = "-month", description = "Number of month (1-12) for timesheet", validateWith = MonthValidator.class)
+    @Parameter(names = {"-month", "-m"}, description = "Number of month (1-12) for timesheet", validateWith = MonthValidator.class)
     private Integer month;
 
-    @Parameter(names = "-dateFrom", description = "Start date of the report, in yyyy-MM-dd format",
+    @Parameter(names = {"-dateFrom", "-df"}, description = "Start date of the report, in yyyy-MM-dd format",
             validateWith = DateValidator.class, converter = DateConverter.class)
     private Date dateFrom;
 
-    @Parameter(names = "-dateTo", description = "End date of the report, in yyyy-MM-dd format",
+    @Parameter(names = {"-dateTo", "-dt"}, description = "End date of the report, in yyyy-MM-dd format",
             validateWith = DateValidator.class, converter = DateConverter.class)
     private Date dateTo;
 
-    @Parameter(names = "-user", description = "User's timesheet", required = false)
+    @Parameter(names = {"-user", "-e"}, description = "User's timesheet")
     private String user;
 
-    @Parameter(names = "-output", description = "Report output format", required = false, converter = OutputConverter.class)
+    @Parameter(names = "-output", description = "Report output format", converter = OutputConverter.class)
     private OutputEnum output = OutputEnum.CONSOLE;
 
-    @Parameter(names = "-fields", description = "Coma-separated fields to be exported", required = false)
-    private String fields = "user,project,userStory,task,date,timeSpent";
+    @Parameter(names = {"-fields", "-f"}, description = "Coma-separated fields to be exported")
+    private String fields = "user,project,userStory,task,date,timeSpent,userStoryEstimation";
 
-    @Parameter(names = "-sum")
+    @Parameter(names = {"-sum", "-s"}, description = "If set, exporter will generate the sum of the time logged")
     private Boolean sum = false;
 
     public String getTinypmUrl() {
@@ -85,6 +89,10 @@ public class ExporterSettings {
 
     public Boolean getSum() {
         return sum;
+    }
+
+    public Boolean getLoadProjects() {
+        return loadProjects;
     }
 
     @VisibleForTesting

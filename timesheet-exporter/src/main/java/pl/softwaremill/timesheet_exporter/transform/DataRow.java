@@ -10,14 +10,17 @@ public class DataRow {
     private String task;
     private Date date;
     private float timeSpent;
+    private double userStoryEstimation;
 
-    public DataRow(String user, String project, String userStory, String task, Date date, float timeSpent) {
+    public DataRow(String user, String project, String userStory, String task, Date date, float timeSpent,
+                   double userStoryEstimation) {
         this.user = user;
         this.project = project;
         this.userStory = userStory;
         this.task = task;
         this.date = date;
         this.timeSpent = timeSpent;
+        this.userStoryEstimation = userStoryEstimation;
     }
 
     public String getUser() {
@@ -44,6 +47,9 @@ public class DataRow {
         return timeSpent;
     }
 
+    public double getUserStoryEstimation() {
+        return userStoryEstimation;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -133,7 +133,7 @@ public class SettingsValidatorShould {
         settingsValidator.validateProjectAndUserSettings(settings);
     }
 
-    @Test(expectedExceptions = ParameterException.class, expectedExceptionsMessageRegExp = "Either -project or -user must be provided")
+    @Test(expectedExceptions = ParameterException.class, expectedExceptionsMessageRegExp = "Either -project, -user or -loadProjects must be provided")
     public void failWhenNeitherProjectNorUserProvided() {
 
         // given

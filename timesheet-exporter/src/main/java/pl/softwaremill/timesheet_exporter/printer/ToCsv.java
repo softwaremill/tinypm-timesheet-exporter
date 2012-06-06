@@ -29,22 +29,8 @@ public class ToCsv {
     }
 
     private static StringBuilder appendWithComma(StringBuilder builder, String text) {
-
-        String escapedText = text;
-
-        if (escapedText.contains(",") ||
-                escapedText.contains("\n") ||
-                escapedText.trim().length() != escapedText.length()) {
-
-            // first 'escape' quotes
-            escapedText = escapedText.replaceAll("\"", "\"\"");
-
-            // and surround with quotes
-            escapedText = "\""+escapedText+"\"";
-        }
-
         return builder
-                .append(escapedText)
+                .append(escapeCSV(text))
                 .append(",");
     }
 
@@ -65,5 +51,22 @@ public class ToCsv {
             }
         }
         return builder.toString();
+    }
+
+    public static String escapeCSV(String text) {
+        String escapedText = text;
+
+        if (escapedText.contains(",") ||
+                escapedText.contains("\n") ||
+                escapedText.trim().length() != escapedText.length()) {
+
+            // first 'escape' quotes
+            escapedText = escapedText.replaceAll("\"", "\"\"");
+
+            // and surround with quotes
+            escapedText = "\""+escapedText+"\"";
+        }
+
+        return escapedText;
     }
 }

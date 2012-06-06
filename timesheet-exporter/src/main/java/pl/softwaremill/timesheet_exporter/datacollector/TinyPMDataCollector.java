@@ -13,7 +13,9 @@ import pl.softwaremill.timesheet_exporter.settings.ExporterSettings;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TinyPMDataCollector {
 
@@ -26,6 +28,20 @@ public class TinyPMDataCollector {
         this.settings = settings;
         tinyPM = new TinyPM(settings.getTinypmUrl(), settings.getAuthenticationToken());
         timePredicatesFactory = new TimePredicatesFactory(settings);
+    }
+
+    public Set<Project> loadListOfProjects() {
+        Set<Project> activeProjects = new HashSet<Project>();
+
+        List<Project> projects = tinyPM.getAllProjects();
+        List<IterationInProject> allIterations = loadIterationsForProjects(projects);
+        Collection<IterationInProject> iterationsInTime = filterIterations(allIterations);
+
+        for (IterationInProject iteration : iterationsInTime) {
+            activeProjects.add(iteration.getProject());
+        }
+
+        return activeProjects;
     }
 
     public Collection<ActivityInIteration> collectData() {

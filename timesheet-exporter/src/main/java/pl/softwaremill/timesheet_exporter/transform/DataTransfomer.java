@@ -21,7 +21,8 @@ public class DataTransfomer {
 
         for (ActivityInIteration activity : activities) {
             DataRow dataRow = new DataRow(activity.getUser().getName(), activity.getIteration().getProject().getName(),
-                    activity.getUserStory().getName(), activity.getTask().getName(), activity.getDate(), activity.getTimeSpent());
+                    activity.getUserStory().getName(), activity.getTask().getName(), activity.getDate(), activity.getTimeSpent(),
+                    activity.getUserStory().getEstimatedEffort());
 
             timesheets.put(activity.getUser(), dataRow);
         }
