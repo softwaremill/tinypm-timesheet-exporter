@@ -11,9 +11,10 @@ public class DataRow {
     private Date date;
     private float timeSpent;
     private double userStoryEstimation;
+    private double taskEstimation;
 
     public DataRow(String user, String project, String userStory, String task, Date date, float timeSpent,
-                   double userStoryEstimation) {
+                   double userStoryEstimation, double taskEstimation) {
         this.user = user;
         this.project = project;
         this.userStory = userStory;
@@ -21,6 +22,7 @@ public class DataRow {
         this.date = date;
         this.timeSpent = timeSpent;
         this.userStoryEstimation = userStoryEstimation;
+        this.taskEstimation = taskEstimation;
     }
 
     public String getUser() {
@@ -49,6 +51,10 @@ public class DataRow {
 
     public double getUserStoryEstimation() {
         return userStoryEstimation;
+    }
+
+    public double getTaskEstimation() {
+        return taskEstimation;
     }
 
     @Override

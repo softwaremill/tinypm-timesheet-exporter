@@ -1,18 +1,17 @@
 package com.google.code.tinypmclient;
 
-import static javax.xml.bind.annotation.XmlAccessType.FIELD;
-
-import java.util.Date;
-import java.util.List;
+import com.google.code.tinypmclient.internal.ActiveResource;
+import com.google.code.tinypmclient.internal.binding.LongFormatDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.Date;
+import java.util.List;
 
-import com.google.code.tinypmclient.internal.ActiveResource;
-import com.google.code.tinypmclient.internal.binding.LongFormatDateAdapter;
+import static javax.xml.bind.annotation.XmlAccessType.FIELD;
 
 @XmlRootElement
 @XmlAccessorType(FIELD)
@@ -25,6 +24,8 @@ public class Task extends ActiveResource {
 	private String description;
 
 	private TaskStatus status;
+
+    private double estimatedEffort;
 
 	@XmlJavaTypeAdapter(LongFormatDateAdapter.class)
 	private Date startedAt;
@@ -99,13 +100,21 @@ public class Task extends ActiveResource {
 	public boolean update() {
 		return handle(clientFactory.getTasks().updateTask(id, this));
 	}
-	
-	@Override
+
+    public double getEstimatedEffort() {
+        return estimatedEffort;
+    }
+
+    public void setEstimatedEffort(double estimatedEffort) {
+        this.estimatedEffort = estimatedEffort;
+    }
+
+    @Override
 	public String toString() {
 		return "Task [assignedUsers=" + assignedUsers + ", completedAt="
 				+ completedAt + ", description=" + description + ", id=" + id
 				+ ", name=" + name + ", startedAt=" + startedAt + ", status="
-				+ status + "]";
+				+ status + ", estimatedEffort = "+estimatedEffort+"]";
 	}
 
 }

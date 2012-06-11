@@ -11,10 +11,14 @@ public class ActivityInIteration implements ItemWithDateRange {
 
     private Activity activity;
     private IterationInProject iteration;
+    private UserStory userStory;
+    private Task task;
 
-    public ActivityInIteration(Activity activity, IterationInProject iteration) {
+    public ActivityInIteration(Activity activity, IterationInProject iteration, UserStory userStory, Task task) {
         this.activity = activity;
         this.iteration = iteration;
+        this.userStory = userStory;
+        this.task = task;
     }
 
     public Date getDate() {
@@ -25,28 +29,12 @@ public class ActivityInIteration implements ItemWithDateRange {
         activity.setUser(user);
     }
 
-    public Task getTask() {
-        return activity.getTask();
-    }
-
     public void setDate(Date date) {
         activity.setDate(date);
     }
 
-    public UserStory getUserStory() {
-        return activity.getUserStory();
-    }
-
-    public void setUserStory(UserStory userStory) {
-        activity.setUserStory(userStory);
-    }
-
     public User getUser() {
         return activity.getUser();
-    }
-
-    public void setTask(Task task) {
-        activity.setTask(task);
     }
 
     public void setTimeSpent(float timeSpent) {
@@ -55,6 +43,22 @@ public class ActivityInIteration implements ItemWithDateRange {
 
     public float getTimeSpent() {
         return activity.getTimeSpent();
+    }
+
+    public UserStory getUserStory() {
+        return userStory;
+    }
+
+    public void setUserStory(UserStory userStory) {
+        this.userStory = userStory;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public IterationInProject getIteration() {

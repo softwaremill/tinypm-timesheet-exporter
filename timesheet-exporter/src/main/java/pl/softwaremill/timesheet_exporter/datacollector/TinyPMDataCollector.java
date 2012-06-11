@@ -2,13 +2,16 @@ package pl.softwaremill.timesheet_exporter.datacollector;
 
 import com.google.code.tinypmclient.Iteration;
 import com.google.code.tinypmclient.Project;
+import com.google.code.tinypmclient.Task;
 import com.google.code.tinypmclient.TinyPM;
+import com.google.code.tinypmclient.UserStory;
 import com.google.code.tinypmclient.internal.Activity;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
+import pl.softwaremill.timesheet_exporter.ProgressBar;
 import pl.softwaremill.timesheet_exporter.settings.ExporterSettings;
 
 import javax.annotation.Nullable;
@@ -110,13 +113,35 @@ public class TinyPMDataCollector {
     private Collection<ActivityInIteration> loadFilteredTasks(Collection<IterationInProject> iterationsInGivenMonth) {
         List<ActivityInIteration> activities = Lists.newArrayList();
 
+        int numberOfIterations = iterationsInGivenMonth.size();
+
+        int currentIteration = 0;
+        int pointsPerIteration = 100 / numberOfIterations;
+
         for (IterationInProject iteration : iterationsInGivenMonth) {
             List<Activity> timesheetForIteration = tinyPM.getTimesheetForIteration(iteration.getId());
 
+            int i = 0;
+
             for (Activity activity : timesheetForIteration) {
-                activities.add(new ActivityInIteration(activity, iteration));
+                // show progress if needed
+                if (settings.getShowProgress()) {
+                    double pseudoPointsPerIteration = (double) (i++) / (double) timesheetForIteration.size();
+
+                    ProgressBar.printProgBar(currentIteration * pointsPerIteration +
+                            (int)(pseudoPointsPerIteration * pointsPerIteration));
+                }
+
+                UserStory userStory = tinyPM.getUserStory(activity.getUserStory().getId());
+                Task task = tinyPM.getTask(activity.getTask().getId());
+
+                activities.add(new ActivityInIteration(activity, iteration, userStory, task));
             }
+
+            currentIteration++;
         }
+
+        ProgressBar.printProgBar(100);
 
         return filterTasks(activities);
     }

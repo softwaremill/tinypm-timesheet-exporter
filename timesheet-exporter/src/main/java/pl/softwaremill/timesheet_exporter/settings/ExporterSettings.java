@@ -41,11 +41,14 @@ public class ExporterSettings {
     @Parameter(names = "-output", description = "Report output format", converter = OutputConverter.class)
     private OutputEnum output = OutputEnum.CONSOLE;
 
-    @Parameter(names = {"-fields", "-f"}, description = "Coma-separated fields to be exported")
-    private String fields = "user,project,userStory,task,date,timeSpent,userStoryEstimation";
+    @Parameter(names = {"-fields", "-f"}, description = "Comma-separated fields to be exported")
+    private String fields = "user,project,userStory,task,date,timeSpent,userStoryEstimation,taskEstimation";
 
     @Parameter(names = {"-sum", "-s"}, description = "If set, exporter will generate the sum of the time logged")
     private Boolean sum = false;
+
+    @Parameter(names = {"-progress"}, description = "If set, progress bar will be shown on the error console (so the actual CSV can be redirected into file)")
+    private Boolean showProgress = false;
 
     public String getTinypmUrl() {
         return tinypmUrl;
@@ -93,6 +96,10 @@ public class ExporterSettings {
 
     public Boolean getLoadProjects() {
         return loadProjects;
+    }
+
+    public Boolean getShowProgress() {
+        return showProgress;
     }
 
     @VisibleForTesting

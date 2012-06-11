@@ -1,13 +1,12 @@
 package com.google.code.tinypmclient;
 
-import static javax.xml.bind.annotation.XmlAccessType.FIELD;
-
-import java.util.List;
+import com.google.code.tinypmclient.internal.ActiveResource;
 
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
-import com.google.code.tinypmclient.internal.ActiveResource;
+import static javax.xml.bind.annotation.XmlAccessType.FIELD;
 
 @XmlRootElement
 @XmlAccessorType(FIELD)
@@ -138,4 +137,21 @@ public class UserStory extends ActiveResource {
 	public boolean create(int projectId) {
 		return handle(clientFactory.getUserStories().createUserStory(projectId, this));
 	}
+
+    @Override
+    public String toString() {
+        return "UserStory{" +
+                "id=" + id +
+                ", position=" + position +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", estimatedEffort=" + estimatedEffort +
+                ", priority=" + priority +
+                ", iteration=" + iteration +
+                ", color=" + color +
+                ", acceptingUser=" + acceptingUser +
+                ", owner=" + owner +
+                ", acceptanceStatus=" + acceptanceStatus +
+                '}';
+    }
 }
