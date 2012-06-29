@@ -25,7 +25,7 @@ Which will generate a list of tasks per user, which were active in the desired M
 
 To be more specific
 
- java -jar timesheet-exporter.jar -u http://10.33.14.219:8080/tinypm/api -t TINYPM_TOKEN -p CRP -m 4 -y 2012 > timesheet.csv
+ java -jar timesheet-exporter.jar -u http://localhost:8080/tinypm/api -t TINYPM_TOKEN -p CRP -m 4 -y 2012 > timesheet.csv
 
 Will generate all the tasks from project CRP in april 2012.
 
@@ -61,25 +61,27 @@ Will generate all the tasks from project CRP in april 2012.
 
 === Example usages ===
 
+All examples are against localy running TinyPM instance on 8080 port. You might need to change that to use your server.
+
 * Get all tasks for a given project for a given month
 
-  java -jar timesheet-exporter.jar -u http://10.33.14.219:8080/tinypm/api -t TINYPM_TOKEN -p CRP -m 4 -y 2012 > timesheet.csv
+  java -jar timesheet-exporter.jar -u http://localhost:8080/tinypm/api -t TINYPM_TOKEN -p CRP -m 4 -y 2012 > timesheet.csv
 
 * Get all tasks for a given project and given user for a given month
 
-  java -jar timesheet-exporter.jar -u http://10.33.14.219:8080/tinypm/api -t TINYPM_TOKEN -p CRP -e "Tomasz Dziurko" -m 4 -y 2012 > timesheet.csv
+  java -jar timesheet-exporter.jar -u http://localhost:8080/tinypm/api -t TINYPM_TOKEN -p CRP -e "Tomasz Dziurko" -m 4 -y 2012 > timesheet.csv
 
 * Get all tasks for 3 different projects (combined) on a date range (from 17 May till 1 Jun)
 
-  java -jar timesheet-exporter.jar -u http://10.33.14.219:8080/tinypm/api -t TINYPM_TOKEN -p JASTIN -p NOTIF -df 2012-05-17 -dt 2012-06-01 > timesheet.csv
+  java -jar timesheet-exporter.jar -u http://localhost:8080/tinypm/api -t TINYPM_TOKEN -p JASTIN -p NOTIF -df 2012-05-17 -dt 2012-06-01 > timesheet.csv
 
 * Load all active projects for a given month
 
- java -jar timesheet-exporter.jar -u http://10.33.14.219:8080/tinypm/api -t TINYPM_TOKEN -lp -df 2012-05-17 -dt 2012-06-01 > projects.csv
+ java -jar timesheet-exporter.jar -u http://localhost:8080/tinypm/api -t TINYPM_TOKEN -lp -df 2012-05-17 -dt 2012-06-01 > projects.csv
 
 * Get all tasks for a project and add an extra row with a sum of them
 
-  java -jar timesheet-exporter.jar -u http://10.33.14.219:8080/tinypm/api -t TINYPM_TOKEN -p CRP -m 4 -y 2012 -s > timesheet.csv
+  java -jar timesheet-exporter.jar -u http://localhost:8080/tinypm/api -t TINYPM_TOKEN -p CRP -m 4 -y 2012 -s > timesheet.csv
 
 === Extra usage notes ===
 
