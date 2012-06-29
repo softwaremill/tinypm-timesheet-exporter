@@ -9,7 +9,9 @@ This page describes the usage of the TinyPM export tool that is used for creatin
 
 == Download ==
 
-You can download the tool from [[http://10.33.14.219:8080/timesheet-exporter.jar here]]
+Clone this repository and run
+
+ mvn install
 
 == Usage ==
 
