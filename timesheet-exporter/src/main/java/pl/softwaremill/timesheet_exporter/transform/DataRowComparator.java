@@ -26,6 +26,12 @@ public class DataRowComparator implements Comparator<DataRow> {
             return datesCompared;
         }
 
+        int userStoriesCompared = row1.getUserStory().compareTo(row2.getUserStory());
+
+        if (userStoriesCompared != 0) {
+            return userStoriesCompared;
+        }
+
         int taskCompared = row1.getTask().compareTo(row2.getTask());
 
         return taskCompared;
