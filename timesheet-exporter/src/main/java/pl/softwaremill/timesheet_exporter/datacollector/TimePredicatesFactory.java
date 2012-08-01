@@ -57,14 +57,12 @@ public class TimePredicatesFactory {
 
     protected boolean iterationIsInAGivenYearAndMonth(IterationInProject iteration, int year, int month) {
 
-        DateTime startDate = new DateTime(iteration.getStartDate());
-        DateTime endDate = new DateTime(iteration.getEndDate());
+        DateTime startDate = new DateTime(iteration.getStartDate()).withDayOfMonth(1).withTime(0, 0, 0, 0);
+        DateTime endDate = new DateTime(iteration.getEndDate()).withDayOfMonth(1).withTime(0, 0, 0, 0);
+        DateTime reportDate = new DateTime(year, month, 1, 0, 0, 0, 0);
+        return reportDate.compareTo(startDate) >= 0 &&
+                reportDate.compareTo(endDate) <= 0;
 
-        return dateIsInGivenYearAndMonth(year, month, startDate) || dateIsInGivenYearAndMonth(year, month, endDate);
-    }
-
-    private boolean dateIsInGivenYearAndMonth(int year, int month, DateTime date) {
-        return date.getYear() == year && date.getMonthOfYear() == month;
     }
 
     protected boolean itemOverlapsGivenDateRange(ItemWithDateRange itemWithDateRange, Date dateFrom, Date dateTo) {
@@ -80,3 +78,4 @@ public class TimePredicatesFactory {
 
     }
 }
+
