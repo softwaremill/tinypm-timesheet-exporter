@@ -1,5 +1,6 @@
 package pl.softwaremill.timesheet_exporter.printer;
 
+import pl.softwaremill.timesheet_exporter.settings.SettingsValidator;
 import pl.softwaremill.timesheet_exporter.transform.DataRow;
 
 public class ToCsv {
@@ -8,7 +9,15 @@ public class ToCsv {
         StringBuilder builder = new StringBuilder();
 
         for (String field : fields) {
-            appendWithComma(builder, row.getValue(field));
+            String value;
+
+            if (staticColumn(field)) {
+                value = getStaticValue(field);
+            }
+            else {
+                value = row.getValue(field);
+            }
+            appendWithComma(builder, value);
         }
 
         builder.deleteCharAt(builder.length() - 1);
@@ -20,12 +29,36 @@ public class ToCsv {
         StringBuilder builder = new StringBuilder();
 
         for (String field : fields) {
-            appendWithComma(builder, camelCaseToNormalCase(field));
+            String columnName;
+
+            if (staticColumn(field)) {
+                columnName = getStaticColumnName(field);
+            }
+            else {
+                columnName = camelCaseToNormalCase(field);
+            }
+            appendWithComma(builder, columnName);
         }
 
         builder.deleteCharAt(builder.length() - 1);
 
         return builder.toString();
+    }
+
+    private static String getStaticColumnName(String field) {
+        return getStaticElement(field, 0);
+    }
+
+    private static String getStaticValue(String field) {
+        return getStaticElement(field, 1);
+    }
+
+    private static String getStaticElement(String field, int index) {
+        return field.split("\\"+SettingsValidator.CONSTANT_FIELD_SEPARATOR)[index];
+    }
+
+    private static boolean staticColumn(String field) {
+        return field.contains(SettingsValidator.CONSTANT_FIELD_SEPARATOR);
     }
 
     private static StringBuilder appendWithComma(StringBuilder builder, String text) {

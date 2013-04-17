@@ -74,8 +74,6 @@ public class TimePredicatesFactory {
         Interval filterInterval = new Interval(new DateTime(dateFrom), new DateTime(dateTo).withTime(23, 59, 59, 999));
 
         return filterInterval.overlaps(iterationInterval);
-
-
     }
 }
 

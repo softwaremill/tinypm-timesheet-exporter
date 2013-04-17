@@ -8,6 +8,8 @@ import java.lang.reflect.Field;
 
 public class SettingsValidator {
 
+    public final static String CONSTANT_FIELD_SEPARATOR = "|";
+
     public void validate(ExporterSettings settings) {
         validateProjectAndUserSettings(settings);
         validateDateSettings(settings);
@@ -26,8 +28,10 @@ public class SettingsValidator {
                     fields += declaredField.getName() + " ";
                 }
 
-                System.err.println("Field "+field+" is incorrect. Available fields are: "+fields+"}");
-                System.exit(1);
+                if (!field.contains(CONSTANT_FIELD_SEPARATOR)) {
+                    System.err.println("Field "+field+" is incorrect. Available fields are: "+fields+"}");
+                    System.exit(1);
+                }
             }
         }
 

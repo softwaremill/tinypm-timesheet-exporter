@@ -6,7 +6,7 @@
 
     <groupId>pl.softwaremill</groupId>
     <artifactId>tinypm-timesheet-exporter</artifactId>
-    <version>1.0</version>
+    <version>2</version>
     <modules>
         <module>tinypm-rest</module>
         <module>timesheet-exporter</module>

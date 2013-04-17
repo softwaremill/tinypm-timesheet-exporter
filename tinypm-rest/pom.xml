@@ -7,7 +7,7 @@
     <parent>
         <artifactId>tinypm-timesheet-exporter</artifactId>
         <groupId>pl.softwaremill</groupId>
-        <version>1.0</version>
+        <version>2</version>
     </parent>
 
     <artifactId>tinypm-rest</artifactId>

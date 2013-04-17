@@ -10,9 +10,11 @@ import java.util.Collection;
 public class DataTransfomer {
 
     private Collection<ActivityInIteration> activities;
+    private String dateFormat;
 
-    public DataTransfomer(Collection<ActivityInIteration> activities) {
+    public DataTransfomer(Collection<ActivityInIteration> activities, String dateFormat) {
         this.activities = activities;
+        this.dateFormat = dateFormat;
     }
 
     public Multimap<User, DataRow> transform() {
@@ -22,7 +24,7 @@ public class DataTransfomer {
         for (ActivityInIteration activity : activities) {
             DataRow dataRow = new DataRow(activity.getUser().getName(), activity.getIteration().getProject().getName(),
                     activity.getUserStory().getName(), activity.getTask().getName(), activity.getDate(), activity.getTimeSpent(),
-                    activity.getUserStory().getEstimatedEffort(), activity.getTask().getEstimatedEffort());
+                    activity.getUserStory().getEstimatedEffort(), activity.getTask().getEstimatedEffort(), dateFormat);
 
             timesheets.put(activity.getUser(), dataRow);
         }

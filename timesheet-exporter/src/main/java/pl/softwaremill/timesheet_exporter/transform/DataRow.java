@@ -1,5 +1,6 @@
 package pl.softwaremill.timesheet_exporter.transform;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DataRow {
@@ -12,9 +13,10 @@ public class DataRow {
     private float timeSpent;
     private double userStoryEstimation;
     private double taskEstimation;
+    private SimpleDateFormat dateFormat;
 
     public DataRow(String user, String project, String userStory, String task, Date date, float timeSpent,
-                   double userStoryEstimation, double taskEstimation) {
+                   double userStoryEstimation, double taskEstimation, String dateFormat) {
         this.user = user;
         this.project = project;
         this.userStory = userStory;
@@ -23,6 +25,7 @@ public class DataRow {
         this.timeSpent = timeSpent;
         this.userStoryEstimation = userStoryEstimation;
         this.taskEstimation = taskEstimation;
+        this.dateFormat = new SimpleDateFormat(dateFormat);
     }
 
     public String getUser() {
@@ -91,6 +94,9 @@ public class DataRow {
 
             if (o == null) {
                 return "";
+            }
+            else if (o instanceof Date) {
+                return dateFormat.format(o);
             }
             else {
                 return o.toString();

@@ -50,6 +50,9 @@ public class ExporterSettings {
     @Parameter(names = {"-progress"}, description = "If set, progress bar will be shown on the error console (so the actual CSV can be redirected into file)")
     private Boolean showProgress = false;
 
+    @Parameter(names = {"-dateFormat"}, description = "The date format when putting out the dates. Default yyyy-MM-dd.")
+    private String dateFormat = "yyyy-MM-dd";
+
     public String getTinypmUrl() {
         return tinypmUrl;
     }
@@ -100,6 +103,10 @@ public class ExporterSettings {
 
     public Boolean getShowProgress() {
         return showProgress;
+    }
+
+    public String getDateFormat() {
+        return dateFormat;
     }
 
     @VisibleForTesting

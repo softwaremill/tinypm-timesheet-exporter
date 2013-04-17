@@ -49,7 +49,8 @@ public class Main {
         } else {
             Collection<ActivityInIteration> activities = tinyPMDataCollector.collectData();
 
-            Multimap<User, DataRow> dataReadyToPrint = new DataTransfomer(activities).transform();
+            Multimap<User, DataRow> dataReadyToPrint = new DataTransfomer(activities, exporterSettings.getDateFormat())
+                    .transform();
 
             IReportPrinter printer = PrinterFactory.createPrinter(exporterSettings);
             printer.printReport(dataReadyToPrint);
